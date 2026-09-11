@@ -153,16 +153,16 @@ let mevcutPuan = 0;
 let bitti = false;
 
 // SES AYARLARI & MÜZİK (voise klasörü)
-const arkaPlanMuzigi = new Audio("muzik.mp3");
+const arkaPlanMuzigi = new Audio("docs/muzik.mp3");
 arkaPlanMuzigi.loop = true;
 
 const sesEfektleri = {
-  buton: new Audio("buton.mp3"),
-  dogru: new Audio("dogru.mp3"),
-  pas: new Audio("pas.mp3"),
-  yanlis: new Audio("yanlis.mp3"),
-  dogrutus: new Audio("dogrutus.mp3"),
-  yanlistus: new Audio("yanlistus.mp3")
+  buton: new Audio("docs/buton.mp3"),
+  dogru: new Audio("docs/dogru.mp3"),
+  pas: new Audio("docs/pas.mp3"),
+  yanlis: new Audio("docs/yanlis.mp3"),
+  dogrutus: new Audio("docs/dogrutus.mp3"),
+  yanlistus: new Audio("docs/yanlistus.mp3")
 };
 
 // Başlangıç Ses Seviyeleri (%5 Müzik, %50 Efekt)
