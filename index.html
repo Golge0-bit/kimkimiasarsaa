@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kim Kimi Asarsa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- GİRİŞ (ANA MENÜ) EKRANI -->
+    <section class="ekran" id="giris">
+      <div class="menu-kutu">
+        <div class="menu-header">
+          <h1 class="ana-baslik">KİM KİMİ ASARSA</h1>
+          <p class="alt">Kelime Savaşları</p>
+        </div>
+
+        <button type="button" id="btn-oyuna-basla">OYUNA BAŞLA</button>
+        
+        <div class="ses-ayarlari-panel">
+          <div class="ses-panel-baslik">SES AYARLARI</div>
+          <div class="ses-satir">
+            <label for="muzik-sesi">Müzik</label>
+            <input type="range" id="muzik-sesi" min="0" max="100" value="50" />
+          </div>
+          <div class="ses-satir">
+            <label for="efekt-sesi">Efektler (SFX)</label>
+            <input type="range" id="efekt-sesi" min="0" max="100" value="70" />
+          </div>
+        </div>
+
+        <button type="button" id="btn-kurallar">KURALLAR & PUANLAMA</button>
+        <button type="button" id="btn-cikis">ÇIKIŞ</button>
+      </div>
+    </section>
+
+    <!-- KURALLAR MODAL PENCERESİ -->
+    <div id="kural-modal" class="modal gizli">
+      <div class="modal-icerik">
+        <h2>Oyun Kuralları ve Puanlama</h2>
+        <div class="kural-liste">
+          <p><strong>🎯 Genel Amaç:</strong> Rakipler sırayla kelime sorar ve tahmin eden taraf harf açarak kelimeyi bulmaya çalışır.</p>
+          <hr />
+          <p><strong>📊 Puanlama Sistemi:</strong></p>
+          <ul>
+            <li>Her kelimenin taban değeri <strong>10 Puandır</strong>.</li>
+            <li>Kelimedeki her doğru harf, kelimenin toplam harf sayısına oranla puan kazandırır.</li>
+            <li>Her yanlış harf seçiminde puanınız düşer ve asılan adamın bir parçası çizilir.</li>
+            <li><strong>Doğru Tahmin:</strong> Kelimeyi harf açmadan direkt bilirseniz kalan kapalı harflerin tüm puanlarını bonus olarak kaparsınız!</li>
+          </ul>
+          <hr />
+          <p><strong>Jokerler & Aksiyonlar:</strong></p>
+          <ul>
+            <li><strong>Yanlış Tahmin (3 Hak):</strong> Yanlış tahmin yaparsanız o anki birikmiş puanınızın %50'si rakibe yazılır ve sıra geçer.</li>
+            <li><strong>Pas (3 Hak):</strong> Sıranızı cezasız bir şekilde rakibe devredersiniz.</li>
+          </ul>
+        </div>
+        <button type="button" id="btn-kural-kapat">Anladım, Kapat</button>
+      </div>
+    </div>
+
+    <!-- KURULUM EKRANI -->
+    <section class="ekran gizli" id="kurulum">
+      <h1>Takım Kurulumu</h1>
+      <p class="alt">İsim seç, renk al, tur sayısını belirle.</p>
+
+      <form id="kurulum-form">
+        <div class="takimlar">
+          <fieldset class="takim">
+            <label for="isim-1">İsim</label>
+            <input type="text" id="isim-1" placeholder="Takım 1" autocomplete="off" required />
+            <p class="renk-baslik">Renk</p>
+            <div class="renkler" id="renkler-1" data-takim="0"></div>
+          </fieldset>
+
+          <fieldset class="takim">
+            <label for="isim-2">İsim</label>
+            <input type="text" id="isim-2" placeholder="Takım 2" autocomplete="off" required />
+            <p class="renk-baslik">Renk</p>
+            <div class="renkler" id="renkler-2" data-takim="1"></div>
+          </fieldset>
+        </div>
+
+        <label for="raunt">Kaç tur?</label>
+        <select id="raunt">
+          <option value="1">1 tur</option>
+          <option value="3" selected>3 tur</option>
+          <option value="5">5 tur</option>
+          <option value="7">7 tur</option>
+          <option value="9">9 tur</option>
+        </select>
+
+        <p class="hata" id="kurulum-hata"></p>
+        <button type="submit">Devam</button>
+      </form>
+    </section>
+
+    <!-- INTRO EKRANI -->
+    <section class="ekran gizli" id="intro">
+      <p class="tur-bilgi" id="intro-tur"></p>
+      <h1 id="intro-isim">—</h1>
+      <p class="soran-bilgi" id="intro-soran">Soran: —</p>
+      <p class="alt">Sıradaki oyuncu için kategori ve kelime belirleyin.</p>
+
+      <form id="intro-form">
+        <fieldset class="kategori-fieldset">
+          <div class="kategoriler" id="kategori-secenekleri"></div>
+          <input
+            type="text"
+            id="ozel-kategori"
+            class="gizli"
+            placeholder="Kendi kategorini yaz..."
+            autocomplete="off"
+          />
+        </fieldset>
+
+        <div class="kelime-giris-kutusu">
+          <label for="kelime-giris">Kelime veya Cümle</label>
+          <input
+            type="text"
+            id="kelime-giris"
+            placeholder="Kelime veya cümle giriniz..."
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <p class="hata" id="intro-hata"></p>
+        <button type="submit">Oyunu Başlat</button>
+      </form>
+    </section>
+
+    <!-- OYUN ALANI -->
+    <main class="ekran gizli" id="oyun">
+      <header>
+        <p class="tur-bilgi" id="oyun-tur"></p>
+        <h1 id="sira-isim">—</h1>
+        <p class="hint">Kategori: <span id="kategori">—</span></p>
+      </header>
+
+      <div class="oyun-ana-duzen">
+        <!-- SOL OYUNCU KARTI -->
+        <div class="oyuncu-kart-container">
+          <aside class="oyuncu-kart" id="kart-0">
+            <div class="kart-yuz kart-on">
+              <div class="tac-alani" id="tac-0">👑</div>
+              <div class="kart-mesaj-alani" id="kart-mesaj-0"></div>
+              <div class="kart-icerik-alt">
+                <h2 class="oyuncu-adi" id="kart-isim-0">1. Takım</h2>
+                <div class="skor-rozet">
+                  <span class="skor-etiket">PUAN</span>
+                  <span class="skor-deger" id="puan-0">0.0</span>
+                </div>
+                <div class="rol-yazisi" id="rol-0">Tahmin Eden</div>
+                <div class="stat-satir">Bilinen Kelimeler: <strong id="bilinen-0">0</strong></div>
+              </div>
+            </div>
+            <div class="kart-yuz kart-arka">
+              <span class="puan-kazanc-deger" id="eklenen-puan-0">+0.0</span>
+              <span class="ekstra-puan-deger gizli" id="ekstra-puan-0">+0.0</span>
+            </div>
+          </aside>
+        </div>
+
+        <!-- ORTA OYUN TAHTASI -->
+        <section class="board">
+          <div class="tahta-adam-alani konm-sol" id="tahta-adam">
+            <div class="figur">
+              <svg class="hangman" viewBox="0 0 200 250" aria-hidden="true">
+                <line class="part" data-part="0" x1="20" y1="230" x2="180" y2="230" />
+                <line class="part" data-part="1" x1="50" y1="230" x2="50" y2="20" />
+                <line class="part" data-part="2" x1="50" y1="20" x2="140" y2="20" />
+                <line class="part" data-part="3" x1="140" y1="20" x2="140" y2="50" />
+                <circle class="part" data-part="4" cx="140" cy="70" r="20" />
+                <line class="part" data-part="5" x1="140" y1="90" x2="140" y2="150" />
+                <line class="part" data-part="6" x1="140" y1="110" x2="110" y2="140" />
+                <line class="part" data-part="7" x1="140" y1="110" x2="170" y2="140" />
+                <line class="part" data-part="8" x1="140" y1="150" x2="115" y2="195" />
+                <line class="part" data-part="9" x1="140" y1="150" x2="165" y2="195" />
+              </svg>
+              <p class="status kalan-hak-yazisi">Kalan Hak: <strong id="kalan">10</strong></p>
+            </div>
+          </div>
+
+          <div class="info">
+            <p class="word" id="kelime" aria-live="polite"></p>
+            <p class="status">Kelime Sayısı: <strong id="kelime-sayisi">0</strong> | Harf Sayısı: <strong id="harf-sayisi">0</strong></p>
+            <p class="status potansiyel-puan-box">Bu El Alınabilir Puan: <strong id="potansiyel-puan">0.0</strong></p>
+          </div>
+
+          <div class="sonraki-btn-alani">
+            <button type="button" id="sonraki-btn" class="gizli">Sıradaki Oyuncu</button>
+          </div>
+        </section>
+
+        <!-- SAĞ OYUNCU KARTI -->
+        <div class="oyuncu-kart-container">
+          <aside class="oyuncu-kart" id="kart-1">
+            <div class="kart-yuz kart-on">
+              <div class="tac-alani" id="tac-1">👑</div>
+              <div class="kart-mesaj-alani" id="kart-mesaj-1"></div>
+              <div class="kart-icerik-alt">
+                <h2 class="oyuncu-adi" id="kart-isim-1">2. Takım</h2>
+                <div class="skor-rozet">
+                  <span class="skor-etiket">PUAN</span>
+                  <span class="skor-deger" id="puan-1">0.0</span>
+                </div>
+                <div class="rol-yazisi" id="rol-1">Soran</div>
+                <div class="stat-satir">Bilinen Kelimeler: <strong id="bilinen-1">0</strong></div>
+              </div>
+            </div>
+            <div class="kart-yuz kart-arka">
+              <span class="puan-kazanc-deger" id="eklenen-puan-1">+0.0</span>
+              <span class="ekstra-puan-deger gizli" id="ekstra-puan-1">+0.0</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- AKSİYON BAR VE KLAVYE -->
+      <div class="alt-alan-wrapper">
+        <div class="aksiyon-bar">
+          <button type="button" id="btn-bildi" class="aksiyon-btn bildi-btn">Doğru Tahmin</button>
+          <button type="button" id="btn-tahmin" class="aksiyon-btn tahmin-btn">Yanlış Tahmin (<span id="tahmin-hak-sayisi">3</span>)</button>
+          <button type="button" id="btn-pas" class="aksiyon-btn pas-btn">Pas (<span id="pas-hak-sayisi">3</span>)</button>
+        </div>
+
+        <section class="keyboard" id="klavye" aria-label="Harf klavyesi"></section>
+      </div>
+    </main>
+
+    <!-- SONUÇ EKRANI -->
+    <section class="ekran gizli" id="sonuc">
+      <h1 id="kazanan-baslik">Oyun Bitti</h1>
+      <p class="sonuc-skor" id="sonuc-skor"></p>
+      <p class="message" id="sonuc-mesaj"></p>
+      <button type="button" id="yeniden-basla">Ana Sayfa</button>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
