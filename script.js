@@ -153,16 +153,16 @@ let mevcutPuan = 0;
 let bitti = false;
 
 // SES AYARLARI & MÜZİK (voise klasörü)
-const arkaPlanMuzigi = new Audio("docs/muzik.mp3");
+const arkaPlanMuzigi = new Audio("voise/muzik.mp3");
 arkaPlanMuzigi.loop = true;
 
 const sesEfektleri = {
-  buton: new Audio("docs/buton.mp3"),
-  dogru: new Audio("docs/dogru.mp3"),
-  pas: new Audio("docs/pas.mp3"),
-  yanlis: new Audio("docs/yanlis.mp3"),
-  dogrutus: new Audio("docs/dogrutus.mp3"),
-  yanlistus: new Audio("docs/yanlistus.mp3")
+  buton: new Audio("voise/buton.mp3"),
+  dogru: new Audio("voise/dogru.mp3"),
+  pas: new Audio("voise/pas.mp3"),
+  yanlis: new Audio("voise/yanlis.mp3"),
+  dogrutus: new Audio("voise/dogrutus.mp3"),
+  yanlistus: new Audio("voise/yanlistus.mp3")
 };
 
 // Başlangıç Ses Seviyeleri (%5 Müzik, %50 Efekt)
@@ -476,7 +476,7 @@ function introGoster() {
   zeminUygula(soran.renk);
   
   if (introIsim) introIsim.textContent = soran.isim;
-  if (introSoran) introSoran.textContent = `Soran: ${soran.isim} (Tahmin Edecek: ${cozen.isim})`;
+  if (introSoran) introSoran.textContent = `Soran: ${soran.isim} (Tahmin Eden: ${cozen.isim})`;
   if (introTur) introTur.textContent = turMetni();
   if (introHata) introHata.textContent = "";
   if (kelimeGiris) kelimeGiris.value = "";
